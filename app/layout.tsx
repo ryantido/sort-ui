@@ -2,8 +2,13 @@ import type { Metadata } from "next";
 import { Inter, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
+import { Button } from "@/components/ui/button";
+import { MessageSquare } from "lucide-react";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +23,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body className={`${inter.className} antialiased`} suppressHydrationWarning>{children}</body>
-    </html>
+    <TooltipProvider>
+      <html lang="en" className={cn("font-sans", geist.variable)}>
+        <body
+          className={`${inter.className} antialiased`}
+          suppressHydrationWarning
+        >
+          <SidebarProvider>
+            <AppSidebar className="border-r border-transparent" />
+            <SidebarInset className="relative">
+              {children}
+
+              <Button
+                size="icon-lg"
+                className="rounded-full absolute z-20 right-6 bottom-12 size-12"
+              >
+                <MessageSquare className="size-5.5 fill-current"/>
+              </Button>
+            </SidebarInset>
+          </SidebarProvider>
+        </body>
+      </html>
+    </TooltipProvider>
   );
 }
