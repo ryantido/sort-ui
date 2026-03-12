@@ -291,7 +291,7 @@ export const OverviewMetrics = ({ data }: { data: Data }) => {
                 className="mt-4 h-9 w-33 hover:bg-blue-500/20"
                 style={{
                   background:
-                    "linear-gradient(0deg, #1745E8 0%, #597EFF 100%);",
+                    "linear-gradient(0deg, #1745E8 0%, #597EFF 100%)",
                   border: "1px solid rgba(32, 32, 32, 0.15)",
                 }}
               >
