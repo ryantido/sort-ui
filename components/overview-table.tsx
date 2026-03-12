@@ -1,14 +1,4 @@
-import {
-  ArrowDown,
-  ArrowUp,
-  Check,
-  Copy,
-  Download,
-  Maximize2,
-  MoreHorizontalIcon,
-  RefreshCcw,
-  X,
-} from "lucide-react";
+import { ArrowDown, ArrowUp, Check, RefreshCcw, X } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   Table,
@@ -19,15 +9,10 @@ import {
   TableRow,
 } from "./ui/table";
 import { Badge } from "./ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 import { TransactionActions } from "./transaction-actions";
 import type { Account, Transaction } from "@/types";
 import { Activity } from "react";
+import { headers } from "@/constants";
 
 export const OverviewTable = ({
   transactions,
@@ -69,16 +54,7 @@ export const OverviewTable = ({
       <Table>
         <TableHeader>
           <TableRow>
-            {[
-              "Transaction ID",
-              "Description",
-              "Type",
-              "Amount",
-              "Status",
-              "Source",
-              "Date",
-              "",
-            ].map((header) => (
+            {headers.map((header) => (
               <TableHead key={header}>{header}</TableHead>
             ))}
           </TableRow>
@@ -107,17 +83,38 @@ export const OverviewTable = ({
 
               <TableCell>${transaction.amount.toFixed(2)}</TableCell>
 
-              <TableCell>
+              <TableCell className="*:rounded-md">
                 {transaction.status === "completed" ? (
-                  <Badge className="border-green-500 bg-green-50 text-green-500">
+                  <Badge
+                    style={{
+                      backgroundColor: "hsla(132, 63%, 63%, 0.1)",
+                      border:
+                        "1px solid var(--border-default, hsla(240, 4%, 16%, 0.1))",
+                      color: "hsla(129, 43%, 35%, 1)",
+                    }}
+                  >
                     <Check /> Paid
                   </Badge>
                 ) : transaction.status === "pending" ? (
-                  <Badge className="border-yellow-500 bg-yellow-50 text-yellow-500">
+                  <Badge
+                    style={{
+                      backgroundColor: "hsla(28, 89%, 58%, 0.1)",
+                      border:
+                        "1px solid var(--border-default, hsla(240, 4%, 16%, 0.1))",
+                      color: "hsla(18, 87%, 35%, 1)",
+                    }}
+                  >
                     <RefreshCcw /> Pending
                   </Badge>
                 ) : (
-                  <Badge className="border-red-500 bg-red-50 text-red-500">
+                  <Badge
+                    style={{
+                      backgroundColor: "hsla(1, 79%, 68%, 0.1)",
+                      border:
+                        "1px solid var(--border-default, hsla(240, 4%, 16%, 0.1))",
+                      color: "hsla(1, 74%, 40%, 1)",
+                    }}
+                  >
                     <X /> Failed
                   </Badge>
                 )}
