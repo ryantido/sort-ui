@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/collapsible";
 
 import {
-  SidebarGroup,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -15,27 +14,13 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
+import type { Items } from "@/types";
 
 import { ChevronDown, ChevronRightIcon } from "lucide-react";
+import { Badge } from "./ui/badge";
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon?: React.ReactNode;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-      embeded?: {
-        title: string;
-        url: string;
-      }[];
-    }[];
-  }[];
-}) {
+export function NavMain({ items }: { items: Items[] }) {
   return (
     <SidebarMenu>
       {items.map((item) => (
@@ -48,9 +33,23 @@ export function NavMain({
             <CollapsibleTrigger asChild>
               <SidebarMenuButton tooltip={item.title}>
                 {item.icon}
-                <span>{item.title}</span>
+                <span className={item.isActive ? "text-active" : ""}>
+                  {item.title}
+                </span>
 
-                <ChevronDown className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:-rotate-180" />
+                <div className="ml-auto inline-flex gap-2 5">
+                  {item.title.match("Ad account") && (
+                    <Badge className="bg-active text-badge-text size-5 flex items-center justify-center">
+                      2
+                    </Badge>
+                  )}
+                  <ChevronDown
+                    className={cn(
+                      "transition-transform duration-200 group-data-[state=open]/collapsible:-rotate-180",
+                      { "text-active": item.isActive },
+                    )}
+                  />
+                </div>
               </SidebarMenuButton>
             </CollapsibleTrigger>
 
@@ -60,12 +59,22 @@ export function NavMain({
                   <Collapsible key={subItem.title} className="group/sub">
                     <SidebarMenuSubItem>
                       <CollapsibleTrigger asChild>
-                        <SidebarMenuSubButton>
+                        <SidebarMenuSubButton
+                          className={cn("text-sidebar-foreground/70 ", {
+                            "not-last:text-active not-last:bg-active/15":
+                              item.isActive,
+                          })}
+                        >
                           <span className="text-nowrap">{subItem.title}</span>
 
                           {subItem.embeded?.length !== 0 &&
                             subItem.embeded !== undefined && (
-                              <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/sub:rotate-90" />
+                              <ChevronRightIcon
+                                className={cn(
+                                  "ml-auto mr-2 transition-transform duration-200 group-data-[state=open]/sub:rotate-90",
+                                  { "text-active": item.isActive },
+                                )}
+                              />
                             )}
                         </SidebarMenuSubButton>
                       </CollapsibleTrigger>

@@ -8,11 +8,9 @@ import {
 } from "./ui/dropdown-menu";
 import { Separator } from "./ui/separator";
 import { Item, ItemActions, ItemContent, ItemSeparator } from "./ui/item";
-import { ListFilter, Search, X } from "lucide-react";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
+import { ListFilter, X } from "lucide-react";
 import { OverviewTable } from "./overview-table";
 import type { Data } from "@/types";
-import { getPagination } from "@/lib/utils";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 import { OverviewSerchbar } from "./overview-serchbar";
 
@@ -27,7 +25,7 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
   }, [search, date, type, source]);
 
   const accountsMap = Object.fromEntries(
-    data.accounts.map((a) => [a.id, a.name]),
+    data.accounts.map((a) => [a.id, a.name])
   );
 
   const filteredTransactions = data.transactions.filter((transaction) => {
@@ -130,6 +128,12 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
                 variant="outline"
                 size="xs"
                 className="py-px rounded-full shrink-0 w-fit mr-1"
+                style={{
+                  background: "hsla(227, 68%, 52%, 0.1)",
+                  borderTop: "1px solid hsla(227, 68%, 52%, 0.1)",
+                  boxShadow:
+                    "0px 1px 2px 0px hsla(0, 0%, 0%, 0.05) 0px -1px 0px 0px hsla(0, 0%, 0%, 0.08) inset;",
+                }}
               >
                 <ItemActions>
                   <Button
@@ -139,8 +143,11 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
                   >
                     <X />
                   </Button>
+                  <span className="font-medium" style={{ color: "hsla(240, 3%, 45%, 1)" }}>Date</span>
                   <ItemSeparator orientation="vertical" />
-                  <ItemContent> {date}</ItemContent>
+                  <ItemContent className="text-active font-medium">
+                    {date}
+                  </ItemContent>
                 </ItemActions>
               </Item>
             )}
@@ -170,6 +177,12 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
                 variant="outline"
                 size="xs"
                 className="py-px rounded-full shrink-0 w-fit mr-1"
+                style={{
+                  background: "hsla(227, 68%, 52%, 0.1)",
+                  borderTop: "1px solid hsla(227, 68%, 52%, 0.1)",
+                  boxShadow:
+                    "0px 1px 2px 0px hsla(0, 0%, 0%, 0.05) 0px -1px 0px 0px hsla(0, 0%, 0%, 0.08) inset;",
+                }}
               >
                 <ItemActions>
                   <Button
@@ -179,8 +192,11 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
                   >
                     <X />
                   </Button>
+                  <span className="font-medium" style={{ color: "hsla(240, 3%, 45%, 1)" }}>Type</span>
                   <ItemSeparator orientation="vertical" />
-                  <ItemContent> {type}</ItemContent>
+                  <ItemContent className="text-active font-medium">
+                    {type}
+                  </ItemContent>
                 </ItemActions>
               </Item>
             )}
@@ -227,8 +243,9 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
                   >
                     <X />
                   </Button>
+                  <span className="font-medium" style={{ color: "hsla(240, 3%, 45%, 1)" }}>Source</span>
                   <ItemSeparator orientation="vertical" />
-                  <ItemContent> {source}</ItemContent>
+                  <ItemContent className="text-active font-medium">{source}</ItemContent>
                 </ItemActions>
               </Item>
             )}
@@ -256,18 +273,20 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            size="sm"
+            className="w-13.5 h-8"
             disabled={page === 1}
             onClick={() => setPage((p) => Math.max(1, p - 1))}
+            style={{ color: "hsla(240, 5%, 32%, 1)" }}
           >
             Prev
           </Button>
 
           <Button
             variant="outline"
-            size="sm"
+            className="w-13.5 h-8"
             disabled={page === totalPages}
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            style={{ color: "hsla(240, 5%, 32%, 1)" }}
           >
             Next
           </Button>
@@ -307,7 +326,11 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
           }}
         >
           {[10, 20, 30, 50].map((size) => (
-            <ToggleGroupItem key={size} value={String(size)}>
+            <ToggleGroupItem
+              key={size}
+              value={String(size)}
+              className="focus:text-active focus:border focus:border-active focus:rounded"
+            >
               {size}
             </ToggleGroupItem>
           ))}

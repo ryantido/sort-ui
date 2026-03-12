@@ -3,8 +3,6 @@
 import * as React from "react";
 
 import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
-import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
@@ -18,39 +16,20 @@ import {
   SidebarRail,
   useSidebar,
 } from "@/components/ui/sidebar";
-import {
-  GalleryVerticalEndIcon,
-  AudioLinesIcon,
-  TerminalIcon,
-  TerminalSquareIcon,
-  BotIcon,
-  BookOpenIcon,
-  Settings2Icon,
-  FrameIcon,
-  PieChartIcon,
-  MapIcon,
-  Settings,
-  TerminalSquare,
-  SquareSlash,
-} from "lucide-react";
-import { Item, ItemContent, ItemDescription, ItemMedia } from "./ui/item";
+import { AudioLinesIcon, TerminalIcon, SquareSlash } from "lucide-react";
 import { Badge } from "./ui/badge";
-import { Card, CardContent, CardDescription, CardFooter } from "./ui/card";
+import { Card, CardContent, CardDescription } from "./ui/card";
 import { Button } from "./ui/button";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
+import Image from "next/image";
 
-// This is sample data.
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   teams: [
     {
       name: "SortUI",
-      logo: <img src="/Avatar.png" alt="sort ui logo" />,
+      logo: (
+        <Image src="/Avatar.png" alt="sort ui logo" width={24} height={24} />
+      ),
     },
     {
       name: "SortUI Pro",
@@ -67,7 +46,14 @@ const data = {
     {
       title: "Ad account",
       url: "#",
-      icon: <TerminalSquareIcon />,
+      icon: (
+        <Image
+          src="/assets/iconsax-home-2(1).png"
+          alt="account icon"
+          width={20}
+          height={20}
+        />
+      ),
       items: [
         {
           title: "Type ads 1",
@@ -82,7 +68,14 @@ const data = {
     {
       title: "Wallets",
       url: "#",
-      icon: <BotIcon />,
+      icon: (
+        <Image
+          src="/assets/iconsax-home-2(2).png"
+          alt="wallet icon"
+          width={20}
+          height={20}
+        />
+      ),
 
       isActive: true,
       items: [
@@ -119,9 +112,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <InputGroup className="mt-3">
-            <InputGroupInput placeholder="Search" />
-            <InputGroupAddon align="inline-end">
+          <InputGroup className="mt-3 relative">
+            <InputGroupInput
+              placeholder={open ? "Search" : ""}
+              disabled={!open}
+            />
+            <InputGroupAddon
+              align="inline-end"
+              className={open ? "" : "absolute inset-0 translate-x-1"}
+            >
               <SquareSlash />
             </InputGroupAddon>
           </InputGroup>
@@ -129,8 +128,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton className="text-sidebar-foreground/70">
-                <TerminalSquare />
+              <SidebarMenuButton
+                tooltip="Home"
+                className="text-sidebar-foreground/70"
+              >
+                <Image
+                  src="/assets/iconsax-home-2.png"
+                  alt="home svg"
+                  width={20}
+                  height={20}
+                />
                 <span>Home</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -140,16 +147,32 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton className="text-sidebar-foreground/70">
-                <TerminalSquare />
+              <SidebarMenuButton
+                tooltip="Teams"
+                className="text-sidebar-foreground/70"
+              >
+                <Image
+                  src="/assets/Clip path group.png"
+                  alt="team icon"
+                  width={20}
+                  height={20}
+                />
                 <span>Teams</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton className="text-sidebar-foreground/70">
-                <TerminalSquare />
+              <SidebarMenuButton
+                tooltip="Affiliate program"
+                className="text-sidebar-foreground/70"
+              >
+                <Image
+                  src="/assets/Clip path group(1).png"
+                  alt="affiliate icon"
+                  width={20}
+                  height={20}
+                />
                 <span>Affiliate program</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -179,18 +202,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               </CardDescription>
             </CardContent>
           </Card>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton className="text-sidebar-foreground/70">
-                <Settings size={20} color="rgba(78, 78, 85, 1)" />
-                <span>Settings</span>
-                <Badge className="size-4.5 bg-badge text-badge-text ml-auto">
-                  1
-                </Badge>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
         </React.Activity>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              tooltip="Settings"
+              className="text-sidebar-foreground/70 my-1"
+            >
+              <Image
+                src="/assets/Clip path group(2).png"
+                alt="settings icon"
+                width={20}
+                height={20}
+              />
+              <span className="text-sidebar-foreground/70">Settings</span>
+              <Badge className="size-4.5 bg-badge text-badge-text ml-auto">
+                1
+              </Badge>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

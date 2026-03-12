@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Button } from "@/components/ui/button";
-import { MessageSquare } from "lucide-react";
+import Image from "next/image";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -36,9 +36,19 @@ export default function RootLayout({
 
               <Button
                 size="icon-lg"
-                className="rounded-full absolute z-20 right-6 bottom-12 size-12"
+                className="rounded-full absolute z-20 right-6 bottom-12 size-14"
+                style={{
+                  background: "hsla(240, 4%, 10%, 1)",
+                  boxShadow:
+                    "0px 1px 2px 0px hsla(0, 0%, 0%, 0.05) 0px -1px 0px 0px hsla(0, 0%, 0%, 0.1) inset",
+                }}
               >
-                <MessageSquare className="size-5.5 fill-current" />
+                <Image
+                  src="/assets/Vector.png"
+                  alt="message icon"
+                  width={26.67}
+                  height={26.67}
+                />
               </Button>
             </SidebarInset>
           </SidebarProvider>
