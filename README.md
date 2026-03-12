@@ -7,8 +7,8 @@ Prototype réalisé pour le test technique **Organization Balance**.
 ## Démarrage
 
 ### Prérequis
-- Node.js ≥ 18
-- pnpm /npm/yarn
+- Node.js ≥ 18  
+- pnpm / npm / yarn
 
 ### Installation
 
@@ -23,8 +23,12 @@ pnpm dev
 ```
 
 Puis ouvrez :
+Puis ouvrez :
 
 - http://localhost:3000
+- https://sort-ui.vercel.app (pour un aperçu live immédiat.)
+
+> Le prototype a été pensé principalement pour un affichage **desktop-first** ; il est donc recommandé de consulter la version de production depuis un ordinateur.
 
 ### Commandes utiles
 
@@ -79,7 +83,7 @@ Puis ouvrez :
   7. **Solde actuel de l’organisation**
      - Récupéré depuis `accounts.wallet_001.balance` (option de calcul possible via historique).
 
-     > Les points 5 et 6 sont listés, mais n'ont pas été complètement implémentés. J'ai trouvé la consigne très ambiguë, car elle n'était en relation étroite avec le prototype fourni
+     > Les points 5 et 6 sont mentionnés dans la documentation, mais leur implémentation complète reste partielle. Les instructions associées m’ont semblé ambiguës par rapport au prototype fourni dans la maquette Figma.
 
 ### Pages & parcours
 - **Overview** : métriques + graphique + résumé.
@@ -98,7 +102,7 @@ Puis ouvrez :
 ## Difficultés rencontrées & améliorations possibles
 
 ### Ce qui a demandé le plus de temps
-- Reproduire la maquette **pixel perfect** en tenant compte du rendu dynamique des icônes/images, au niveau de la colonne de sources les tableaux.
+- Reproduire la maquette **pixel perfect** en tenant compte du rendu dynamique des icônes/images, au niveau de la colonne des sources dans les tableaux.
 - Concevoir un graphe custom sans dépendance, tout en gardant un rendu propre et responsive.
 - La compréhension propre des consignes 5 et 6
 - L'inconsistance notable de certaines dimensions depuis figma de certains composants, lorsqu'elles sont transposées dans Next via css (C'est d'ailleurs l'une des raisons pour lesquelles j'utilise l'attribut style, en plus des className)
@@ -107,11 +111,11 @@ Puis ouvrez :
 - Ajouter des tests unitaires/integration (Vitest + React Testing Library).
 - Ajouter une version du graphique avec une librairie dédiée (Recharts, Chart.js, D3) pour des axes, tooltips, et une meilleure accessibilité. (Une fois le prototype mis à jour, afin de rester consistant)
 - Améliorer l’accessibilité (gestion du focus, ARIA, navigation clavier, contraste couleur).
-- Reduire le bundlesize en décomposant les composants jusqu'à l'état optimal (à plusieurs niveau, j'ai du repliquer des logiques, pour ne pas avoir à reorganiser les types, props et autres)
+- Réduire la taille du bundle en décomposant les composants jusqu'à l'état optimal (à plusieurs niveau, j'ai du repliquer des logiques, pour ne pas avoir à reorganiser les types, props et autres)
 - Rassembler toutes les fonctions utiles, comme celles qui m'ont permis d'effectuer les filtres de montant dans `lib/utils`, pour plus de propreté et d'extensibilité
 - Améliorer la logique dans l'onglet de Team wallet
 - Travailler le responsive mobile (si besoin, étant donné que j'ai pensé desktop first. À mon avis, pour du mobile-first, beaucoup de composant vont être cachés sur mobile)
 
 ---
 
-> La sidebar peut être redimentionné. Il suffit de placer le cureur au niveau du miniscule espace qui existe entre la sidebar et le contenu principal
+> La sidebar peut être redimensionnée. Il suffit de placer le curseur dans l’espace entre la sidebar et le contenu principal. Par ailleurs, le projet privilégie une architecture simple et lisible, afin de mettre en évidence la logique métier, la gestion des données et la structuration des composants, conformément aux objectifs du test technique.
