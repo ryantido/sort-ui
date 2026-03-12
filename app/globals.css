@@ -50,6 +50,10 @@
   --color-border-muted: hsla(240, 4%, 16%, 0.15);
   --color-button-muted: hsla(0, 0%, 100%, 1);
   --color-badge: hsla(39, 94%, 57%, 1);
+  --color-gradient-start: hsla(227, 82%, 50%, 1);
+  --color-gradient-end: hsla(227, 100%, 68%, 1);
+  --color-active: hsla(227, 68%, 52%, 1);
+  --color-text-white: hsla(0, 0%, 100%, 1);
 }
 
 * {
