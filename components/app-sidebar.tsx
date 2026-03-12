@@ -50,7 +50,7 @@ const data = {
   teams: [
     {
       name: "SortUI",
-      logo: <img src="/Avatar.png" alt="sort ui logo" />,      
+      logo: <img src="/Avatar.png" alt="sort ui logo" />,
     },
     {
       name: "SortUI Pro",
@@ -120,9 +120,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <SidebarGroup>
           <InputGroup className="mt-3">
-            <InputGroupInput placeholder="Search"/>
+            <InputGroupInput placeholder="Search" />
             <InputGroupAddon align="inline-end">
-            <SquareSlash/>
+              <SquareSlash />
             </InputGroupAddon>
           </InputGroup>
         </SidebarGroup>

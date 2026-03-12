@@ -38,7 +38,7 @@ export default function RootLayout({
                 size="icon-lg"
                 className="rounded-full absolute z-20 right-6 bottom-12 size-12"
               >
-                <MessageSquare className="size-5.5 fill-current"/>
+                <MessageSquare className="size-5.5 fill-current" />
               </Button>
             </SidebarInset>
           </SidebarProvider>
