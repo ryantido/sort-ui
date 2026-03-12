@@ -6,33 +6,11 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemFooter,
-  ItemMedia,
-  ItemTitle,
-} from "@/components/ui/item";
+import { Item, ItemContent, ItemMedia, ItemTitle } from "@/components/ui/item";
 import { cn } from "@/lib/utils";
-import {
-  ArrowDown,
-  ArrowUp,
-  BadgeCheck,
-  Bell,
-  Check,
-  ChevronsUpDownIcon,
-  Copy,
-  Download,
-  Eye,
-  HelpCircle,
-  Wallet,
-  X,
-} from "lucide-react";
+import { BadgeCheck, Bell, Eye, EyeOff, HelpCircle } from "lucide-react";
 import { useState } from "react";
 import { motion } from "motion/react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
@@ -44,12 +22,26 @@ import { OrganizationBalance2 } from "@/components/organization-balance2";
 import { OrganizationBalance3 } from "@/components/organization-balance3";
 import type { Data } from "@/types";
 import { OverviewSerchbar } from "@/components/overview-serchbar";
+import { team } from "@/constants/team";
+import { overviewTabs } from "@/constants/overview-tabs";
+import Image from "next/image";
 const data = rawData as Data;
 
 export default function Main() {
   const [active, setActive] = useState("Overview");
   const [slice, setSlice] = useState(5);
   const [search, setSearch] = useState<string>("");
+
+  const [visible, setVisible] = useState(true);
+
+  const filteredTeam = team.filter((team) => {
+    const query = search.toLowerCase().trimStart();
+    if (query === "") return team;
+    return (
+      team.name.toLowerCase().includes(query) ||
+      team.email.toLowerCase().includes(query)
+    );
+  });
   return (
     <main className="flex flex-col justify-end h-screen bg-sidebar relative">
       <div className="h-[calc(100dvh-0.5rem)] border border-muted rounded-t-2xl p-4 bg-white overflow-y-auto">
@@ -61,19 +53,50 @@ export default function Main() {
               className="rounded-full py-1 px-4 shrink-0 w-fit"
             >
               <ItemMedia>
-                <Wallet />
+                <Image
+                  src="/assets/iconsax-home-2(2).png"
+                  alt="wallet picture"
+                  width={20}
+                  height={20}
+                />
               </ItemMedia>
               <ItemContent className="flex items-center">
                 <div className="flex justify-center items-center gap-1">
-                  <p>$0,00</p>
-                  <Button variant="ghost">
-                    <Eye />
+                  <p>
+                    {visible
+                      ? data.accounts[
+                          data.accounts.findIndex(
+                            (acc) => acc.id === "wallet_001",
+                          )
+                        ].balance
+                      : "*****"}
+                  </p>
+                  <Button
+                    variant="ghost"
+                    className="size-fit p-1 rounded-full ml-1"
+                    style={{
+                      background: "hsla(0, 0%, 55%, 0.17)",
+                      color: "hsla(240, 4%, 32%, 1)",
+                    }}
+                    onClick={() => setVisible(!visible)}
+                  >
+                    {visible ? <EyeOff /> : <Eye />}
                   </Button>
                 </div>
               </ItemContent>
               {active === "Overview" && (
                 <ItemMedia>
-                  <Button>Top-Up</Button>
+                  <Button
+                    className="hover:bg-blue-500/20 h-7 w-17.5 text-badge-text rounded-[6px]"
+                    style={{
+                      background:
+                        "linear-gradient(0deg, #1745E8 0%, #597EFF 100%)",
+
+                      border: "1px solid rgba(242, 244, 255, 0.35)",
+                    }}
+                  >
+                    Top-Up
+                  </Button>
                 </ItemMedia>
               )}
             </Item>
@@ -109,7 +132,13 @@ export default function Main() {
                     <ItemTitle>Simon Alt</ItemTitle>
                   </ItemContent>
                   <ItemMedia>
-                    <ChevronsUpDownIcon size={18} className="ml-auto" />
+                    <Image
+                      src="/assets/tail-icon.png"
+                      alt="down icon"
+                      className="ml-auto"
+                      width={20}
+                      height={20}
+                    />
                   </ItemMedia>
                 </Item>
               </DropdownMenuTrigger>
@@ -127,29 +156,41 @@ export default function Main() {
           </section>
         </header>
 
-        <section className="mt-7 flex flex-col gap-y-10 mb-2">
+        <section className="flex flex-col gap-y-10 mb-4">
           <h3 className="text-muted-foreground flex justify-between items-center">
             <span>Manage your organization funds here.</span>
-            {active !== "Overview" && <Button size="lg">Allocate funds</Button>}
+            {active !== "Overview" && (
+              <Button
+                size="lg"
+                className="mt-4 h-9 w-33 hover:bg-blue-500/20"
+                style={{
+                  background: "linear-gradient(0deg, #1745E8 0%, #597EFF 100%)",
+                  border: "1px solid rgba(32, 32, 32, 0.15)",
+                  boxShadow: "0px 0px 7.2px 0px hsla(0, 0%, 100%, 0.69) inset",
+                }}
+              >
+                Allocate funds
+              </Button>
+            )}
           </h3>
           <div className="flex justify-between">
             <div
               className={cn(
                 "relative flex flex-wrap gap-x-4 md:gap-x-8 md:border-b border-muted w-full",
-                active === "Overview" && "w-fit"
+                active === "Overview" && "w-fit",
               )}
-              aria-label="section categories"
             >
-              {["Overview", "Transactions", "Team wallets"].map((cat) => (
+              {overviewTabs.map((cat) => (
                 <button
                   key={cat}
                   role="tab"
+                  type="button"
                   onClick={() => setActive(cat)}
                   aria-selected={active === cat}
                   tabIndex={active === cat ? 0 : -1}
                   className="relative pb-3 text-sm font-medium text-muted-foreground transition cursor-pointer"
                 >
-                  <span className={cn(active === cat && "text-blue-500")}>
+                  <span className={cn(active === cat && "text-active")}>
                     {cat}
                   </span>
 
@@ -171,9 +212,9 @@ export default function Main() {
             {active === "Overview" ? (
               <ToggleGroup
                 type="single"
-                size="sm"
                 defaultValue="30D"
                 variant="outline"
+                className="*:h-8 *:w-12 *:focus:text-active"
               >
                 <ToggleGroupItem value="30D">30D</ToggleGroupItem>
                 <ToggleGroupItem value="15D">15D</ToggleGroupItem>
@@ -182,11 +223,21 @@ export default function Main() {
             ) : (
               active === "Team wallets" && (
                 <div className="flex items-center gap-3 ml-4 shrink-0">
-                  <OverviewSerchbar search={search} setSearch={setSearch} />
+                  <OverviewSerchbar
+                    placeholder="Search by name or email"
+                    search={search}
+                    setSearch={setSearch}
+                  />
                   <Button variant="outline">
                     Hide all{" "}
-                    <Badge className="size-5">
-                      <Eye />
+                    <Badge
+                      className="size-5"
+                      style={{
+                        background: "hsla(0, 0%, 55%, 0.17)",
+                        color: "hsla(240, 4%, 32%, 1)",
+                      }}
+                    >
+                      <EyeOff />
                     </Badge>
                   </Button>
                 </div>
@@ -197,7 +248,7 @@ export default function Main() {
 
         {active === "Overview" ? (
           <>
-            <OverviewMetrics />
+            <OverviewMetrics data={data} />
             <OverviewTable
               transactions={data.transactions}
               accounts={data.accounts}
@@ -209,7 +260,7 @@ export default function Main() {
         ) : active === "Transactions" ? (
           <OrganizationBalance2 data={data} />
         ) : (
-          <OrganizationBalance3 />
+          <OrganizationBalance3 team={filteredTeam} />
         )}
       </div>
     </main>
