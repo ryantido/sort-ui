@@ -1,3 +1,5 @@
+import type { team } from "@/constants/team";
+
 export type Transaction = {
   id: string;
   date: string;
@@ -49,3 +51,26 @@ export type Data = {
   teams: Team[];
   periods: Periods;
 };
+
+export type Items = {
+  title: string;
+  url: string;
+  icon?: React.ReactNode;
+  isActive?: boolean;
+  items?: {
+    title: string;
+    url: string;
+    embeded?: {
+      title: string;
+      url: string;
+    }[];
+  }[];
+};
+
+export type Projects = {
+  name: string;
+  url: string;
+  icon: React.ReactNode;
+};
+
+export type TeamType = typeof team;
