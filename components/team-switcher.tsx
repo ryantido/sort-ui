@@ -17,7 +17,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { ChevronsUpDownIcon, PlusIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
+import Image from "next/image";
 
 export function TeamSwitcher({
   teams,
@@ -51,7 +52,13 @@ export function TeamSwitcher({
                 <span className="truncate font-medium">{activeTeam.name}</span>
                 <span className="truncate text-xs">{activeTeam.plan}</span>
               </div>
-              <ChevronsUpDownIcon className="ml-auto" />
+              <Image
+                src="/assets/tail-icon.png"
+                alt="down icon"
+                className="ml-auto"
+                width={20}
+                height={20}
+              />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent

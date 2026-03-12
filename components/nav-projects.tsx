@@ -9,13 +9,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import type { Projects } from "@/types";
 import {
   MoreHorizontalIcon,
   FolderIcon,
@@ -23,15 +23,7 @@ import {
   Trash2Icon,
 } from "lucide-react";
 
-export function NavProjects({
-  projects,
-}: {
-  projects: {
-    name: string;
-    url: string;
-    icon: React.ReactNode;
-  }[];
-}) {
+export function NavProjects({ projects }: { projects: Projects[] }) {
   const { isMobile } = useSidebar();
 
   return (
