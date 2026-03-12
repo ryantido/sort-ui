@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -13,6 +13,7 @@ import { OverviewTable } from "./overview-table";
 import type { Data } from "@/types";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 import { OverviewSerchbar } from "./overview-serchbar";
+import { daysMap } from "@/constants";
 
 export const OrganizationBalance2 = ({ data }: { data: Data }) => {
   const [date, setDate] = useState<string | undefined>(undefined);
@@ -24,60 +25,58 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
     setPage(1);
   }, [search, date, type, source]);
 
-  const accountsMap = Object.fromEntries(
-    data.accounts.map((a) => [a.id, a.name])
-  );
-
-  const filteredTransactions = data.transactions.filter((transaction) => {
-    const now = new Date();
-
-    if (search) {
-      const query = search.toLowerCase();
-
-      const sourceName =
-        accountsMap[transaction.accountId]?.toLowerCase() ?? "";
-
-      if (
-        !transaction.id.toLowerCase().includes(query) &&
-        !sourceName.includes(query) &&
-        !transaction.description.toLowerCase().includes(query)
-      ) {
-        return false;
+  const accountsMap = useMemo(
+  () => Object.fromEntries(data.accounts.map(a => [a.id, a.name])),
+  [data.accounts]
+)
+  const filteredTransactions = 
+  useMemo(() => {
+    return data.transactions.filter((transaction) => {
+      const now = new Date();
+  
+      if (search) {
+        const query = search.toLowerCase();
+  
+        const sourceName =
+          accountsMap[transaction.accountId]?.toLowerCase() ?? "";
+  
+        if (
+          !transaction.id.toLowerCase().includes(query) &&
+          !sourceName.includes(query) &&
+          !transaction.description.toLowerCase().includes(query)
+        ) {
+          return false;
+        }
       }
-    }
-
-    if (date) {
-      const daysMap: Record<string, number> = {
-        "Last 7 days": 7,
-        "Last 15 days": 15,
-        "Last 30 days": 30,
-      };
-
-      const days = daysMap[date];
-
-      if (days) {
-        const limit = new Date(now.getTime());
-        limit.setDate(now.getDate() - days);
-
-        const transactionDate = new Date(transaction.date);
-
-        if (transactionDate < limit || transactionDate > now) return false;
+  
+      if (date) {
+  
+        const days = daysMap[date];
+  
+        if (days) {
+          const limit = new Date(now.getTime());
+          limit.setDate(now.getDate() - days);
+  
+          const transactionDate = new Date(transaction.date);
+  
+          if (transactionDate < limit || transactionDate > now) return false;
+        }
       }
-    }
-
-    if (type) {
-      const transactionType =
-        transaction.category === "ad_spending" ? "Debit" : "Credit";
-
-      if (transactionType !== type) return false;
-    }
-
-    if (source) {
-      if (accountsMap[transaction.accountId] !== source) return false;
-    }
-
-    return true;
-  });
+  
+      if (type) {
+        const transactionType =
+          transaction.category === "ad_spending" ? "Debit" : "Credit";
+  
+        if (transactionType !== type) return false;
+      }
+  
+      if (source) {
+        if (accountsMap[transaction.accountId] !== source) return false;
+      }
+  
+      return true;
+    });
+}, [data.transactions, search, date, type, source])
 
   const [pageSize, setPageSize] = useState(10);
 
@@ -132,7 +131,7 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
                   background: "hsla(227, 68%, 52%, 0.1)",
                   borderTop: "1px solid hsla(227, 68%, 52%, 0.1)",
                   boxShadow:
-                    "0px 1px 2px 0px hsla(0, 0%, 0%, 0.05) 0px -1px 0px 0px hsla(0, 0%, 0%, 0.08) inset;",
+                    "0px 1px 2px 0px hsla(0, 0%, 0%, 0.05) 0px -1px 0px 0px hsla(0, 0%, 0%, 0.08) inset",
                 }}
               >
                 <ItemActions>
@@ -181,7 +180,7 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
                   background: "hsla(227, 68%, 52%, 0.1)",
                   borderTop: "1px solid hsla(227, 68%, 52%, 0.1)",
                   boxShadow:
-                    "0px 1px 2px 0px hsla(0, 0%, 0%, 0.05) 0px -1px 0px 0px hsla(0, 0%, 0%, 0.08) inset;",
+                    "0px 1px 2px 0px hsla(0, 0%, 0%, 0.05) 0px -1px 0px 0px hsla(0, 0%, 0%, 0.08) inset",
                 }}
               >
                 <ItemActions>
