@@ -108,8 +108,8 @@ export default function Main() {
                 <HelpCircle /> Help
               </Badge>
 
-              <Button variant="ghost" className="cursor-pointer">
-                <Bell />
+              <Button variant="ghost" className="cursor-pointer mr-4">
+                <Image src="/assets/lead-icon.png" alt="bell" width={20} height={20} />
               </Button>
             </div>
             <DropdownMenu>
