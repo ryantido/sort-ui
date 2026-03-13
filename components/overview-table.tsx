@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, Check, RefreshCcw, X } from "lucide-react";
+import { ArrowDown, ArrowUp } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   Table,
@@ -8,30 +8,33 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import { Badge } from "./ui/badge";
 import { TransactionActions } from "./transaction-actions";
+import { TransactionStatusBadge } from "./transaction-status-badge";
 import type { Account, Transaction } from "@/types";
-import { Activity } from "react";
 import { headers } from "@/constants";
+import { formatTransactionDate, formatCurrency } from "@/lib/utils";
+import { Activity } from "react";
 
-export const OverviewTable = ({
-  transactions,
-  accounts,
-  slice,
-  setSlice,
-  visible = false,
-}: {
+export interface OverviewTableProps {
   transactions: Transaction[];
   accounts: Account[];
   slice: number;
   setSlice: React.Dispatch<React.SetStateAction<number>>;
   visible?: boolean;
-}) => {
+}
+
+export function OverviewTable({
+  transactions,
+  accounts,
+  slice,
+  setSlice,
+  visible = false,
+}: OverviewTableProps) {
   const accountsMap = Object.fromEntries(
     accounts.map((account) => [account.id, account]),
   );
 
-  const visibleTransactions = transactions.slice(0, slice);
+  const hasMoreTransactions = slice < transactions.length;
 
   return (
     <section>
@@ -45,6 +48,8 @@ export const OverviewTable = ({
             onClick={() =>
               setSlice((prev) => (prev < transactions.length ? prev + 5 : prev))
             }
+            disabled={!hasMoreTransactions}
+            aria-label={visible ? "View more transactions" : "View more"}
           >
             View more
           </Button>
@@ -61,7 +66,7 @@ export const OverviewTable = ({
         </TableHeader>
 
         <TableBody>
-          {visibleTransactions.map((transaction) => (
+          {transactions.slice(0, slice).map((transaction) => (
             <TableRow key={transaction.id}>
               <TableCell>{transaction.id}</TableCell>
 
@@ -70,73 +75,34 @@ export const OverviewTable = ({
               <TableCell>
                 {transaction.category === "ad_spending" ? (
                   <span className="inline-flex items-center gap-2">
-                    <ArrowUp className="text-green-500" size={18} />
+                    <ArrowUp
+                      className="text-green-500"
+                      size={18}
+                      aria-hidden="true"
+                    />
                     Debit
                   </span>
                 ) : (
                   <span className="inline-flex items-center gap-2">
-                    <ArrowDown className="text-red-500" size={18} />
+                    <ArrowDown
+                      className="text-red-500"
+                      size={18}
+                      aria-hidden="true"
+                    />
                     Credit
                   </span>
                 )}
               </TableCell>
 
-              <TableCell>${transaction.amount.toFixed(2)}</TableCell>
+              <TableCell>{formatCurrency(transaction.amount)}</TableCell>
 
               <TableCell className="*:rounded-md">
-                {transaction.status === "completed" ? (
-                  <Badge
-                    style={{
-                      backgroundColor: "hsla(132, 63%, 63%, 0.1)",
-                      border:
-                        "1px solid var(--border-default, hsla(240, 4%, 16%, 0.1))",
-                      color: "hsla(129, 43%, 35%, 1)",
-                    }}
-                  >
-                    <Check /> Paid
-                  </Badge>
-                ) : transaction.status === "pending" ? (
-                  <Badge
-                    style={{
-                      backgroundColor: "hsla(28, 89%, 58%, 0.1)",
-                      border:
-                        "1px solid var(--border-default, hsla(240, 4%, 16%, 0.1))",
-                      color: "hsla(18, 87%, 35%, 1)",
-                    }}
-                  >
-                    <RefreshCcw /> Pending
-                  </Badge>
-                ) : (
-                  <Badge
-                    style={{
-                      backgroundColor: "hsla(1, 79%, 68%, 0.1)",
-                      border:
-                        "1px solid var(--border-default, hsla(240, 4%, 16%, 0.1))",
-                      color: "hsla(1, 74%, 40%, 1)",
-                    }}
-                  >
-                    <X /> Failed
-                  </Badge>
-                )}
+                <TransactionStatusBadge status={transaction.status} />
               </TableCell>
 
               <TableCell>{accountsMap[transaction.accountId]?.name}</TableCell>
 
-              <TableCell>
-                {new Date(transaction.date)
-                  .toLocaleString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                    hour: "numeric",
-                    minute: "2-digit",
-                    hour12: true,
-                  })
-                  .replace(
-                    new Date().getFullYear().toString().charAt(3) + ",",
-                    new Date().getFullYear().toString().charAt(3),
-                  )}
-              </TableCell>
+              <TableCell>{formatTransactionDate(transaction.date)}</TableCell>
 
               <TableCell>
                 <TransactionActions />
@@ -147,4 +113,4 @@ export const OverviewTable = ({
       </Table>
     </section>
   );
-};
+}
