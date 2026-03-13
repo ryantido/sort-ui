@@ -83,12 +83,12 @@ export const TEXT_COLORS = {
   titleGray: "hsla(0, 0%, 19%, 1)",
 } as const;
 
-export const DATE_FILTER_OPTIONS = [
+export const DATE_FILTER_OPTIONS: string[] = [
   "Last 7 days",
   "Last 15 days",
   "Last 30 days",
-] as const;
+];
 
-export const TYPE_FILTER_OPTIONS = ["Debit", "Credit"] as const;
+export const TYPE_FILTER_OPTIONS: string[] = ["Debit", "Credit"];
 
-export const PAGE_SIZE_OPTIONS = [10, 20, 30, 50] as const;
+export const PAGE_SIZE_OPTIONS: number[] = [10, 20, 30, 50];

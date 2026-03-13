@@ -7,14 +7,20 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Separator } from "./ui/separator";
-import { Item, ItemActions, ItemContent, ItemSeparator } from "./ui/item";
 import { ListFilter, X } from "lucide-react";
 import { OverviewTable } from "./overview-table";
 import type { Data } from "@/types";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 import { OverviewSerchbar } from "./overview-serchbar";
-import { daysMap } from "@/constants";
+import {
+  DATE_FILTER_OPTIONS,
+  daysMap,
+  PAGE_SIZE_OPTIONS,
+  TYPE_FILTER_OPTIONS,
+} from "@/constants";
 import { filterTransactions } from "@/lib/utils";
+import { RenderItem } from "./render-item";
+import { RenderFilterButton } from "./render-filter-button";
 
 export const OrganizationBalance2 = ({ data }: { data: Data }) => {
   const [date, setDate] = useState<string | undefined>(undefined);
@@ -60,172 +66,33 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
             <span className="text-muted-foreground">Filters</span>
             <Separator orientation="vertical" className="mx-1" />
             {date === undefined ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="border-dashed border-muted-foreground rounded-full px-4 h-6 text-muted-foreground mr-1"
-                    size="sm"
-                  >
-                    <ListFilter />
-                    Date
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="center">
-                  {["Last 7 days", "Last 15 days", "Last 30 days"]
-                    .reverse()
-                    .map((item) => (
-                      <DropdownMenuItem
-                        key={item}
-                        onClick={() => setDate(item)}
-                      >
-                        {item}
-                      </DropdownMenuItem>
-                    ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <RenderFilterButton
+                label="Date"
+                constant={DATE_FILTER_OPTIONS}
+                callback={setDate}
+              />
             ) : (
-              <Item
-                variant="outline"
-                size="xs"
-                className="py-px rounded-full shrink-0 w-fit mr-1"
-                style={{
-                  background: "hsla(227, 68%, 52%, 0.1)",
-                  borderTop: "1px solid hsla(227, 68%, 52%, 0.1)",
-                  boxShadow:
-                    "0px 1px 2px 0px hsla(0, 0%, 0%, 0.05) 0px -1px 0px 0px hsla(0, 0%, 0%, 0.08) inset",
-                }}
-              >
-                <ItemActions>
-                  <Button
-                    variant="ghost"
-                    size="icon-xs"
-                    onClick={() => setDate(undefined)}
-                  >
-                    <X />
-                  </Button>
-                  <span
-                    className="font-medium"
-                    style={{ color: "hsla(240, 3%, 45%, 1)" }}
-                  >
-                    Date
-                  </span>
-                  <ItemSeparator orientation="vertical" />
-                  <ItemContent className="text-active font-medium">
-                    {date}
-                  </ItemContent>
-                </ItemActions>
-              </Item>
+              <RenderItem label="Date" state={date} callback={setDate} />
             )}
 
             {type === undefined ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="border-dashed border-muted-foreground rounded-full px-4 h-6 text-muted-foreground mr-1"
-                    size="sm"
-                  >
-                    <ListFilter />
-                    Type
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="center">
-                  {["Debit", "Credit"].map((item) => (
-                    <DropdownMenuItem key={item} onClick={() => setType(item)}>
-                      {item}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <RenderFilterButton
+                label="Type"
+                constant={TYPE_FILTER_OPTIONS}
+                callback={setType}
+              />
             ) : (
-              <Item
-                variant="outline"
-                size="xs"
-                className="py-px rounded-full shrink-0 w-fit mr-1"
-                style={{
-                  background: "hsla(227, 68%, 52%, 0.1)",
-                  borderTop: "1px solid hsla(227, 68%, 52%, 0.1)",
-                  boxShadow:
-                    "0px 1px 2px 0px hsla(0, 0%, 0%, 0.05) 0px -1px 0px 0px hsla(0, 0%, 0%, 0.08) inset",
-                }}
-              >
-                <ItemActions>
-                  <Button
-                    variant="ghost"
-                    size="icon-xs"
-                    onClick={() => setType(undefined)}
-                  >
-                    <X />
-                  </Button>
-                  <span
-                    className="font-medium"
-                    style={{ color: "hsla(240, 3%, 45%, 1)" }}
-                  >
-                    Type
-                  </span>
-                  <ItemSeparator orientation="vertical" />
-                  <ItemContent className="text-active font-medium">
-                    {type}
-                  </ItemContent>
-                </ItemActions>
-              </Item>
+              <RenderItem label="Type" state={type} callback={setType} />
             )}
 
             {source === undefined ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="border-dashed border-muted-foreground rounded-full px-4 h-6 text-muted-foreground"
-                    size="sm"
-                  >
-                    <ListFilter />
-                    Source
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  className="w-fit p-2 *:not-last:mb-2"
-                  align="center"
-                >
-                  {data.accounts
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .map((item) => (
-                      <DropdownMenuItem
-                        key={item.name}
-                        onClick={() => setSource(item.name)}
-                      >
-                        {item.name}
-                      </DropdownMenuItem>
-                    ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <RenderFilterButton
+                label="Source"
+                constant={data.accounts}
+                callback={setSource}
+              />
             ) : (
-              <Item
-                variant="outline"
-                size="xs"
-                className="py-px rounded-full shrink-0 w-fit"
-              >
-                <ItemActions>
-                  <Button
-                    variant="ghost"
-                    size="icon-xs"
-                    onClick={() => setSource(undefined)}
-                  >
-                    <X />
-                  </Button>
-                  <span
-                    className="font-medium"
-                    style={{ color: "hsla(240, 3%, 45%, 1)" }}
-                  >
-                    Source
-                  </span>
-                  <ItemSeparator orientation="vertical" />
-                  <ItemContent className="text-active font-medium">
-                    {source}
-                  </ItemContent>
-                </ItemActions>
-              </Item>
+              <RenderItem label="Source" state={source} callback={setSource} />
             )}
           </section>
           <section className="flex items-center gap-4">
@@ -270,7 +137,7 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
           </Button>
 
           <div className="ml-4 text-sm text-muted-foreground">
-            Page {page} of {totalPages}
+            Page {page} of {totalPages || 1}
           </div>
         </div>
 
@@ -283,7 +150,7 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
             setPage(1);
           }}
         >
-          {[10, 20, 30, 50].map((size) => (
+          {PAGE_SIZE_OPTIONS.map((size) => (
             <ToggleGroupItem
               key={size}
               value={String(size)}
