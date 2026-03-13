@@ -66,7 +66,10 @@ export default function Main() {
                 <ItemContent className="flex items-center">
                   <div className="flex justify-center items-center gap-1">
                     <p aria-live="polite">
-                      {maskSensitiveData(formatCurrency(walletBalance), visible)}
+                      {maskSensitiveData(
+                        formatCurrency(walletBalance),
+                        visible,
+                      )}
                     </p>
                     <Button
                       variant="ghost"
@@ -104,7 +107,9 @@ export default function Main() {
                       <HelpCircle aria-hidden="true" /> Help
                     </Badge>
                   </TooltipTrigger>
-                  <TooltipContent updatePositionStrategy="optimized">Placeholder</TooltipContent>
+                  <TooltipContent updatePositionStrategy="optimized">
+                    Placeholder
+                  </TooltipContent>
                 </Tooltip>
 
                 <Button variant="ghost" className="cursor-pointer mr-4">

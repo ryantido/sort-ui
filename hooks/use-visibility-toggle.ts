@@ -1,19 +1,10 @@
 "use client";
 
+import type {
+  UseVisibilityToggleOptions,
+  UseVisibilityToggleReturn,
+} from "@/types";
 import { useState, useCallback } from "react";
-
-interface UseVisibilityToggleOptions {
-  initialVisible?: boolean;
-  onToggle?: (visible: boolean) => void;
-}
-
-interface UseVisibilityToggleReturn {
-  visible: boolean;
-  toggle: () => void;
-  setVisible: (visible: boolean) => void;
-  show: () => void;
-  hide: () => void;
-}
 
 export function useVisibilityToggle({
   initialVisible = true,

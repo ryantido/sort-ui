@@ -10,18 +10,10 @@ import {
 } from "./ui/table";
 import { TransactionActions } from "./transaction-actions";
 import { TransactionStatusBadge } from "./transaction-status-badge";
-import type { Account, Transaction } from "@/types";
+import type { OverviewTableProps } from "@/types";
 import { headers } from "@/constants";
 import { formatTransactionDate, formatCurrency } from "@/lib/utils";
 import { Activity } from "react";
-
-export interface OverviewTableProps {
-  transactions: Transaction[];
-  accounts: Account[];
-  slice: number;
-  setSlice: React.Dispatch<React.SetStateAction<number>>;
-  visible?: boolean;
-}
 
 export function OverviewTable({
   transactions,

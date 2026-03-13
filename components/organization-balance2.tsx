@@ -27,11 +27,10 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
   }, [search, date, type, source]);
 
   const accountsMap = useMemo(
-    () => Object.fromEntries(data.accounts.map(a => [a.id, a.name])),
-    [data.accounts]
+    () => Object.fromEntries(data.accounts.map((a) => [a.id, a.name])),
+    [data.accounts],
   );
 
-  // Use the new filterTransactions utility
   const filteredTransactions = useMemo(() => {
     return filterTransactions(data.transactions, {
       search,
@@ -39,7 +38,7 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
       type,
       source,
       accountsMap,
-      daysMap
+      daysMap,
     });
   }, [data.transactions, search, date, type, source, accountsMap]);
 
@@ -47,8 +46,6 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
 
   const [page, setPage] = useState(1);
   const totalPages = Math.ceil(filteredTransactions.length / pageSize);
-
-  // const pages = getPagination(totalPages, page);
 
   const start = (page - 1) * pageSize;
   const end = start + pageSize;
@@ -107,7 +104,12 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
                   >
                     <X />
                   </Button>
-                  <span className="font-medium" style={{ color: "hsla(240, 3%, 45%, 1)" }}>Date</span>
+                  <span
+                    className="font-medium"
+                    style={{ color: "hsla(240, 3%, 45%, 1)" }}
+                  >
+                    Date
+                  </span>
                   <ItemSeparator orientation="vertical" />
                   <ItemContent className="text-active font-medium">
                     {date}
@@ -156,7 +158,12 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
                   >
                     <X />
                   </Button>
-                  <span className="font-medium" style={{ color: "hsla(240, 3%, 45%, 1)" }}>Type</span>
+                  <span
+                    className="font-medium"
+                    style={{ color: "hsla(240, 3%, 45%, 1)" }}
+                  >
+                    Type
+                  </span>
                   <ItemSeparator orientation="vertical" />
                   <ItemContent className="text-active font-medium">
                     {type}
@@ -207,9 +214,16 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
                   >
                     <X />
                   </Button>
-                  <span className="font-medium" style={{ color: "hsla(240, 3%, 45%, 1)" }}>Source</span>
+                  <span
+                    className="font-medium"
+                    style={{ color: "hsla(240, 3%, 45%, 1)" }}
+                  >
+                    Source
+                  </span>
                   <ItemSeparator orientation="vertical" />
-                  <ItemContent className="text-active font-medium">{source}</ItemContent>
+                  <ItemContent className="text-active font-medium">
+                    {source}
+                  </ItemContent>
                 </ItemActions>
               </Item>
             )}
@@ -259,26 +273,6 @@ export const OrganizationBalance2 = ({ data }: { data: Data }) => {
             Page {page} of {totalPages}
           </div>
         </div>
-
-        {/* <ToggleGroup
-          type="single"
-          value={String(page)}
-          onValueChange={(val) => {
-            if (val) setPage(Number(val));
-          }}
-        >
-          {pages.map((item, index) =>
-            item === "..." ? (
-              <span key={index} className="px-2 text-muted-foreground">
-                ...
-              </span>
-            ) : (
-              <ToggleGroupItem key={item} value={String(item)}>
-                {item}
-              </ToggleGroupItem>
-            )
-          )}
-        </ToggleGroup> */}
 
         <ToggleGroup
           type="single"

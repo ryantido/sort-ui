@@ -10,15 +10,7 @@ import { Badge } from "./ui/badge";
 import Image from "next/image";
 import { ICON_BADGE_STYLES, TEXT_COLORS } from "@/constants/styles";
 import { formatCurrency } from "@/lib/utils";
-
-interface MetricCardProps {
-  title: string;
-  amount: number;
-  iconSrc: string;
-  iconAlt: string;
-  iconStyle: "blue" | "yellow";
-  period?: string;
-}
+import type { MetricCardProps } from "@/types";
 
 export function MetricCard({
   title,

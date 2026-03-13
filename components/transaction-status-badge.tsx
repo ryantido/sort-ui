@@ -1,11 +1,7 @@
 import { Check, RefreshCcw, X } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { STATUS_BADGE_STYLES } from "@/constants/styles";
-import type { Transaction } from "@/types";
-
-interface TransactionStatusBadgeProps {
-  status: Transaction["status"];
-}
+import type { TransactionStatusBadgeProps } from "@/types";
 
 export function TransactionStatusBadge({
   status,

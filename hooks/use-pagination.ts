@@ -1,26 +1,7 @@
 "use client";
 
+import type { UsePaginationOptions, UsePaginationReturn } from "@/types";
 import { useState, useMemo, useCallback } from "react";
-
-interface UsePaginationOptions {
-  totalItems: number;
-  initialPageSize?: number;
-  initialPage?: number;
-}
-
-interface UsePaginationReturn {
-  page: number;
-  pageSize: number;
-  totalPages: number;
-  startIndex: number;
-  endIndex: number;
-  setPage: (page: number) => void;
-  setPageSize: (size: number) => void;
-  goToNextPage: () => void;
-  goToPreviousPage: () => void;
-  canGoNext: boolean;
-  canGoPrevious: boolean;
-}
 
 export function usePagination({
   totalItems,

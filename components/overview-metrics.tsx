@@ -1,12 +1,8 @@
-import type { Data } from "@/types";
+import type { OverviewMetricsProps } from "@/types";
 import { BalanceCard } from "./balance-card";
 import { MetricCard } from "./metric-card";
 import { PromoCard } from "./promo-card";
 import { getTotalAllocated, getTotalSpent } from "@/lib/utils";
-
-interface OverviewMetricsProps {
-  data: Data;
-}
 
 export function OverviewMetrics({ data }: OverviewMetricsProps) {
   const totalAllocated = getTotalAllocated(data.transactions);

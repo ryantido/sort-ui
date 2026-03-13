@@ -8,13 +8,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Item, ItemActions, ItemContent, ItemSeparator } from "./ui/item";
 import { FILTER_BADGE_STYLES } from "@/constants/styles";
-
-interface FilterButtonProps {
-  label: string;
-  options: readonly string[] | string[];
-  onSelect: (value: string) => void;
-  "aria-label"?: string;
-}
+import { ActiveFilterBadgeProps, FilterButtonProps } from "@/types";
 
 export function FilterButton({
   label,
@@ -44,12 +38,6 @@ export function FilterButton({
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
-
-interface ActiveFilterBadgeProps {
-  label: string;
-  value: string;
-  onRemove: () => void;
 }
 
 export function ActiveFilterBadge({

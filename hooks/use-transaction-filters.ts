@@ -1,30 +1,11 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import type { Transaction } from "@/types";
+import type {
+  UseTransactionFiltersOptions,
+  UseTransactionFiltersReturn,
+} from "@/types";
 import { daysMap } from "@/constants";
-
-interface TransactionFilterState {
-  search: string;
-  date: string | undefined;
-  type: string | undefined;
-  source: string | undefined;
-}
-
-interface UseTransactionFiltersOptions {
-  transactions: Transaction[];
-  accountsMap: Record<string, string>;
-}
-
-interface UseTransactionFiltersReturn extends TransactionFilterState {
-  setSearch: (value: string) => void;
-  setDate: (value: string | undefined) => void;
-  setType: (value: string | undefined) => void;
-  setSource: (value: string | undefined) => void;
-  resetFilters: () => void;
-  filteredTransactions: Transaction[];
-  hasActiveFilters: boolean;
-}
 
 export function useTransactionFilters({
   transactions,
@@ -39,7 +20,6 @@ export function useTransactionFilters({
     const now = new Date();
 
     return transactions.filter((transaction) => {
-      
       if (search) {
         const query = search.toLowerCase();
         const sourceName =

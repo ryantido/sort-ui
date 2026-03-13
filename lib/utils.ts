@@ -1,18 +1,19 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { Transaction } from "@/types";
+import type {
+  FilterTransactionsOptions,
+  PaginationItem,
+  Transaction,
+  TransactionFilterFn,
+} from "@/types";
 
 export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
 
-export interface TransactionFilterFn {
-  (transaction: Transaction): boolean;
-}
-
 export function sumTransactions(
   transactions: Transaction[],
-  filter: TransactionFilterFn
+  filter: TransactionFilterFn,
 ): number {
   return transactions.filter(filter).reduce((acc, t) => acc + t.amount, 0);
 }
@@ -20,36 +21,34 @@ export function sumTransactions(
 export function getPendingDeposit(transactions: Transaction[]): number {
   return sumTransactions(
     transactions,
-    (t) => t.category === "deposit" && t.status === "pending"
+    (t) => t.category === "deposit" && t.status === "pending",
   );
 }
 
 export function getPendingWithdrawal(transactions: Transaction[]): number {
   return sumTransactions(
     transactions,
-    (t) => t.category === "withdraw" && t.status === "pending"
+    (t) => t.category === "withdraw" && t.status === "pending",
   );
 }
 
 export function getTotalAllocated(transactions: Transaction[]): number {
   return sumTransactions(
     transactions,
-    (t) => t.category === "allocation" && t.status === "completed"
+    (t) => t.category === "allocation" && t.status === "completed",
   );
 }
 
 export function getTotalSpent(transactions: Transaction[]): number {
   return sumTransactions(
     transactions,
-    (t) => t.category === "ad_spending" && t.status === "completed"
+    (t) => t.category === "ad_spending" && t.status === "completed",
   );
 }
 
-export type PaginationItem = number | "...";
-
 export function getPagination(
   totalPages: number,
-  page: number
+  page: number,
 ): PaginationItem[] {
   const pages: PaginationItem[] = [];
 
@@ -72,24 +71,14 @@ export function getPagination(
   return pages;
 }
 
-export interface FilterTransactionsOptions {
-  search?: string;
-  date?: string;
-  type?: string;
-  source?: string;
-  accountsMap: Record<string, string>;
-  daysMap: Record<string, number>;
-}
-
 export function filterTransactions(
   transactions: Transaction[],
-  options: FilterTransactionsOptions
+  options: FilterTransactionsOptions,
 ): Transaction[] {
   const { search, date, type, source, accountsMap, daysMap } = options;
   const now = new Date();
 
   return transactions.filter((transaction) => {
-    
     if (search) {
       const query = search.toLowerCase();
       const sourceName =
@@ -143,7 +132,7 @@ export function formatTransactionDate(dateString: string): string {
     })
     .replace(
       `${now.getFullYear().toString().charAt(3)},`,
-      now.getFullYear().toString().charAt(3)
+      now.getFullYear().toString().charAt(3),
     );
 
   return formatted;

@@ -18,19 +18,7 @@ import {
   getPendingWithdrawal,
   maskSensitiveData,
 } from "@/lib/utils";
-import type { Account, Transaction } from "@/types";
-
-interface BalanceCardProps {
-  organizationName: string;
-  accounts: Account[];
-  transactions: Transaction[];
-  walletId?: string;
-}
-
-interface BalanceStatProps {
-  label: string;
-  amount: number;
-}
+import type { BalanceCardProps, BalanceStatProps } from "@/types";
 
 function BalanceStat({ label, amount }: BalanceStatProps) {
   return (
@@ -66,7 +54,6 @@ export function BalanceCard({
   return (
     <Card className="h-71.75 flex flex-col justify-center bg-[url('/gradient.jpg')] bg-center bg-cover bg-no-repeat">
       <CardContent className="flex flex-col gap-4">
-        
         <Item
           variant="outline"
           className="text-white py-4 h-25 border border-muted-foreground/20 backdrop-blur-lg"

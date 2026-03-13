@@ -1,19 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import type { TeamType } from "@/types";
-
-interface UseTeamFilterOptions {
-  team: TeamType;
-  initialSearch?: string;
-}
-
-interface UseTeamFilterReturn {
-  search: string;
-  setSearch: (value: string) => void;
-  filteredTeam: TeamType;
-  hasResults: boolean;
-}
+import type { UseTeamFilterOptions, UseTeamFilterReturn } from "@/types";
 
 export function useTeamFilter({
   team,

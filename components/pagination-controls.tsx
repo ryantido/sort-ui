@@ -1,15 +1,8 @@
+import type { PaginationControlsProps } from "@/types";
 import { Button } from "./ui/button";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 import { PAGE_SIZE_OPTIONS } from "@/constants/styles";
 import { TEXT_COLORS } from "@/constants/styles";
-
-interface PaginationControlsProps {
-  page: number;
-  totalPages: number;
-  pageSize: number;
-  onPageChange: (page: number) => void;
-  onPageSizeChange: (size: number) => void;
-}
 
 export function PaginationControls({
   page,
