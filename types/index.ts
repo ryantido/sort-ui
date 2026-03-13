@@ -18,6 +18,8 @@ export type Account = {
   platform?: string;
 };
 
+export type FilterButtonLabel = "Date" | "Type" | "Source";
+
 export type Organization = {
   id: string;
   name: string;
