@@ -14,3 +14,5 @@ export const daysMap: Record<string, number> = {
   "Last 15 days": 15,
   "Last 30 days": 30,
 };
+
+export * from "./styles";
