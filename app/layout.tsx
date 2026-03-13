@@ -13,7 +13,8 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Sort UI - Advanced Data Sorting & Organization Tool",
-  description: "Sort UI is a powerful, intuitive platform for organizing and sorting data efficiently. Streamline your workflow with our modern sorting interface.",
+  description:
+    "Sort UI is a powerful, intuitive platform for organizing and sorting data efficiently. Streamline your workflow with our modern sorting interface.",
   keywords: ["sort", "data sorting", "organization", "UI", "tool"],
   authors: [{ name: "Sort UI Team" }],
   openGraph: {
@@ -22,7 +23,8 @@ export const metadata: Metadata = {
     url: "https://sort-ui.com",
     siteName: "Sort UI",
     title: "Sort UI - Advanced Data Sorting & Organization Tool",
-    description: "Streamline your workflow with our modern sorting interface and powerful data organization features.",
+    description:
+      "Streamline your workflow with our modern sorting interface and powerful data organization features.",
     images: [
       {
         url: "https://sort-ui.com/og-image.png",
@@ -35,7 +37,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Sort UI - Advanced Data Sorting & Organization Tool",
-    description: "Streamline your workflow with powerful data sorting and organization features.",
+    description:
+      "Streamline your workflow with powerful data sorting and organization features.",
     images: ["https://sort-ui.com/twitter-image.png"],
   },
   robots: {
@@ -59,7 +62,7 @@ export default function RootLayout({
     <TooltipProvider>
       <html lang="en" className={cn("font-sans", geist.variable)}>
         <body
-          className={`${inter.className} antialiased`}
+          className={cn(inter.className, "antialiased")}
           suppressHydrationWarning
         >
           <SidebarProvider>

@@ -22,6 +22,7 @@ import { Card, CardContent, CardDescription } from "./ui/card";
 import { Button } from "./ui/button";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
 import Image from "next/image";
+import { motion } from "motion/react";
 
 const data = {
   teams: [
@@ -181,27 +182,38 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter>
         <React.Activity mode={open ? "visible" : "hidden"}>
-          <Card className="py-3 border border-border-card!">
-            <CardContent className="px-3">
-              <CardDescription className="font-medium">
-                <p>
-                  {" "}
-                  You're currently on the{" "}
-                  <span className="font-semibold text-black/90">
-                    Starter plan
-                  </span>
-                  . Upgrade to access lowe fees, advanced features.
-                </p>
-                <Button
-                  variant="default"
-                  size="sm"
-                  className="w-full mt-2 rounded-sm bg-button-muted text-black/90 border border-border-muted"
-                >
-                  Upgrade
-                </Button>
-              </CardDescription>
-            </CardContent>
-          </Card>
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 12,
+              delay: 0.25,
+            }}
+          >
+            <Card className="py-3 border border-border-card!">
+              <CardContent className="px-3">
+                <CardDescription className="font-medium">
+                  <p>
+                    {" "}
+                    You're currently on the{" "}
+                    <span className="font-semibold text-black/90">
+                      Starter plan
+                    </span>
+                    . Upgrade to access lowe fees, advanced features.
+                  </p>
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="w-full mt-2 rounded-sm bg-button-muted text-black/90 border border-border-muted"
+                  >
+                    Upgrade
+                  </Button>
+                </CardDescription>
+              </CardContent>
+            </Card>
+          </motion.div>
         </React.Activity>
         <SidebarMenu>
           <SidebarMenuItem>
