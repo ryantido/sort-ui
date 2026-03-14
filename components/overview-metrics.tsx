@@ -9,7 +9,7 @@ export function OverviewMetrics({ data }: OverviewMetricsProps) {
   const totalSpent = getTotalSpent(data.transactions);
 
   return (
-    <div className="grid h-72 grid-cols-1 lg:grid-cols-[1.65fr_1.25fr_2.4fr] gap-3">
+    <div className="grid h-69 2xl:h-72 grid-cols-1 lg:grid-cols-[1.65fr_1.25fr_2.4fr] gap-3">
       <BalanceCard
         organizationName={data.organization.name}
         accounts={data.accounts}

@@ -29,7 +29,7 @@ export function PromoCard() {
           <Image
             src="/illustration.png"
             alt="illustration"
-            className="object-cover"
+            className="object-contain max-h-62"
             fill
           />
         </figure>

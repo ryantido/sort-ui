@@ -52,7 +52,7 @@ export function BalanceCard({
   const pendingWithdrawal = getPendingWithdrawal(transactions);
 
   return (
-    <Card className="h-71.75 flex flex-col justify-center bg-[url('/gradient.jpg')] bg-center bg-cover bg-no-repeat">
+    <Card className="flex flex-col justify-center bg-[url('/gradient.jpg')] bg-center bg-cover bg-no-repeat">
       <CardContent className="flex flex-col gap-4">
         <Item
           variant="outline"
@@ -82,9 +82,9 @@ export function BalanceCard({
               aria-label={visible ? "Hide balance" : "Show balance"}
             >
               {visible ? (
-                <EyeOff className="size-6.5" aria-hidden="true" />
+                <EyeOff className="size-5.5 2xl:size-6.5" aria-hidden="true" />
               ) : (
-                <Eye className="size-6.5" aria-hidden="true" />
+                <Eye className="size-5.5 2xl:size-6.5" aria-hidden="true" />
               )}
             </Button>
           </ItemActions>
