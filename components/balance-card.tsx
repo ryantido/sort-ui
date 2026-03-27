@@ -22,7 +22,7 @@ import type { BalanceCardProps, BalanceStatProps } from "@/types";
 
 function BalanceStat({ label, amount }: BalanceStatProps) {
   return (
-    <Item style={CARD_STYLES.glassItem} className="h-18">
+    <Item style={CARD_STYLES.glassItem} className="h-18 border-0">
       <ItemContent className="*:font-medium">
         <ItemDescription
           className="text-xs opacity-60"
@@ -52,11 +52,11 @@ export function BalanceCard({
   const pendingWithdrawal = getPendingWithdrawal(transactions);
 
   return (
-    <Card className="flex flex-col justify-center bg-[url('/gradient.jpg')] bg-center bg-cover bg-no-repeat">
+    <Card className="flex flex-col justify-center bg-[url('/Background.png')] bg-center bg-cover bg-no-repeat">
       <CardContent className="flex flex-col gap-4">
         <Item
           variant="outline"
-          className="text-white py-4 h-25 border border-muted-foreground/20 backdrop-blur-lg"
+          className="text-white py-4 h-25 border-0 backdrop-blur-lg"
           style={CARD_STYLES.gradientBackground}
         >
           <ItemMedia className="h-full">
